@@ -1,34 +1,34 @@
+import { Item } from "../../types/Item";
+
 export interface State {
-  todos: Todos[]
+  todos: Item[]
 }
 
-export interface Todos {
-  title: string;
-  notes: string;
-  done: boolean;
-}
+const init: Item[] = [
+  {
+    id: 1,
+    title: 'Laundry',
+    notes: 'Bring laundry to home',
+    picture: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    done: false
+  },
+  {
+    id: 2,
+    title: 'Pick up Mat',
+    notes: 'Pick up Mat at school',
+    picture: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    done: true
+  },
+  {
+    id: 3,
+    title: 'Presentation',
+    notes: 'Get presentation ready',
+    picture: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+    done: false
+  }
+]
 
-const init: State = {
-  todos: [
-    {
-      title: 'Laundry',
-      notes: 'Bring laundry to home',
-      done: false
-    },
-    {
-      title: 'Pick up Mat',
-      notes: 'Pick up Mat at school',
-      done: true
-    },
-    {
-      title: 'Presentation',
-      notes: 'Get presentation ready',
-      done: false
-    }
-  ]
-}
-
-export default function (state: State = init, payload: any) {
+export default function (state = init, payload: any) {
   switch (payload.type) {
     default:
       return state;

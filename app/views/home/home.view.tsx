@@ -1,37 +1,43 @@
-import React from 'react';
-import { View } from 'react-native';
-import { connect } from 'react-redux';
-import { State } from '../../redux/reducers/todo.reducer';
-import { ListItem } from 'react-native-elements'
-import { CheckBox } from 'react-native-elements'
+import React, { FunctionComponent, useEffect } from "react";
+import { Text, View } from "react-native";
+import { Button, ListItem } from "react-native-elements";
+import { useNavigation } from "@react-navigation/native";
+import { OTHERS } from "../others/others.view";
+import { Item } from "../../types/Item";
+import { connect } from "react-redux";
 
-class HomeView extends React.Component<State> {
-  constructor(props: State) {
-    super(props);
-  }
-  render() {
-    return (
-      <View>
-        {
-          this.props.todos.map((l, i) => (
-            <ListItem key={i} bottomDivider>
-              <ListItem.Content>
-                <ListItem.Title>{l.title}</ListItem.Title>
-                <ListItem.Subtitle>{l.notes}</ListItem.Subtitle>
-              </ListItem.Content>
-              <CheckBox checked={l.done} />
-            </ListItem>
-          ))
-        }
-      </View>
-    );
-  }
+interface Props {
+  todos: Item[];
 }
 
-const mapStateToProps = (state: any) => ({ todos: state.todos_store.todos });
+const HomeView: FunctionComponent<Props> = (props) => {
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log(props);
+  }, []);
+
+  return (
+    <View>
+      {props.todos.map((item: Item) => {
+        return (
+          <ListItem
+            key={item.id}
+            onPress={() => navigation.navigate(OTHERS, { id: item.id })}>
+            <ListItem.Content>
+              <ListItem.Title>{item.title}</ListItem.Title>
+            </ListItem.Content>
+          </ListItem>
+        );
+      })}
+    </View>
+  );
+};
+
+const mapStateToProps = (state: any) => ({ todos: state.todos });
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    dispatch
-  }
+    dispatch,
+  };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(HomeView);
